@@ -4,8 +4,8 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        
+      <div className='game-area'>
+        <div className='snake-dot'></div>
       </div>
     );
   }
