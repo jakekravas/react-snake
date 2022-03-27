@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import Snake from './Snake'
 
 class App extends Component {
+
+  state = {
+    snakeDots: [
+      [0,0],
+      [0,2]
+    ]
+  }
 
   render() {
     return (
       <div className='game-area'>
-        <div className='snake-dot'></div>
+        <Snake snakeDots = {this.state.snakeDots}/>
       </div>
     );
   }
