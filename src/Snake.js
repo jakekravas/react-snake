@@ -6,8 +6,8 @@ const Snake = ({ snakeDots }) => {
     <div>
       {snakeDots.map((dot, i) => {
         const style = {
-          top: `${dot[0]}%`,
-          left: `${dot[1]}%`
+          left: `${dot[0]}%`,
+          top: `${dot[1]}%`
         }
         return <div key={i} style={style} className='snake-dot'/>
       })}
