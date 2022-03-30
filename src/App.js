@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Snake from './Snake'
+import Snake from './components/Snake'
+import Food from './components/Food'
 
 class App extends Component {
 
@@ -9,7 +10,11 @@ class App extends Component {
       [0,0],
       [2,0]
     ],
-    speed: 100
+    speed: 100,
+    foodDot: [
+      [50],
+      [50]
+    ]
   };
 
   componentDidMount() {
@@ -88,6 +93,7 @@ class App extends Component {
     return (
       <div className='game-area'>
         <Snake snakeDots = {this.state.snakeDots}/>
+        <Food dot={this.state.foodDot}/>
       </div>
     )
   }

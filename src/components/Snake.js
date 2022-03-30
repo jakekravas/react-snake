@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Snake = ({ snakeDots }) => {
-  
+  console.log(snakeDots);
   return (
     <div>
       {snakeDots.map((dot, i) => {
