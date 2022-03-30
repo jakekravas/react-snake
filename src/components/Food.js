@@ -2,7 +2,7 @@ import React from 'react'
 
 const Food = ({ dot }) => {
   return (
-    <div style={{top: `${dot[0]}%`, left: `${dot[1]}%`}} className='food'/>
+    <div style={{left: `${dot[0]}%`, top: `${dot[1]}%`}} className='food'/>
   )
 }
 

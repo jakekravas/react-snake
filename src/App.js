@@ -11,10 +11,8 @@ class App extends Component {
       [2,0]
     ],
     speed: 100,
-    foodDot: [
-      [50],
-      [50]
-    ]
+    // foodDot: [0,48]
+    foodDot: [40,0]
   };
 
   componentDidMount() {
@@ -61,7 +59,6 @@ class App extends Component {
     let snakeDots = this.state.snakeDots;
     const oldHead = snakeDots[snakeDots.length - 1];
     let newHead;
-
     switch (this.state.direction){
       case 'LEFT':
         newHead = [oldHead[0] - 2, oldHead[1]]
@@ -87,6 +84,27 @@ class App extends Component {
     this.setState({
       snakeDots: snakeDots
     });
+
+    this.checkIfAte(newHead)
+  }
+
+  checkIfAte = head => {
+    if (head[0] === this.state.foodDot[0] && head[1] === this.state.foodDot[1]) {
+      this.enlargeSnake()
+      this.moveFood()
+    }
+  }
+
+  enlargeSnake = () => {
+    let dots = this.state.snakeDots
+    dots.unshift([])
+    this.setState({ snakeDots: dots });
+  }
+
+  moveFood = () => {
+    const coordinate1 = (Math.floor(Math.random() * 49) + 1) * 2
+    const coordinate2 = (Math.floor(Math.random() * 49) + 1) * 2
+    this.setState({ foodDot: [ coordinate1, coordinate2 ] })
   }
 
   render() {
