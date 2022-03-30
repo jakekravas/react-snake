@@ -86,6 +86,8 @@ class App extends Component {
     });
 
     this.checkIfAte(newHead)
+    this.checkIfOutOfBounds(newHead)
+    this.checkIfHitItself(newHead)
   }
 
   checkIfAte = head => {
@@ -97,7 +99,8 @@ class App extends Component {
 
   enlargeSnake = () => {
     let dots = this.state.snakeDots
-    dots.unshift([])
+    // dots.unshift([])
+    dots.unshift([], [], [], [], [], [], [])
     this.setState({ snakeDots: dots });
   }
 
@@ -105,6 +108,29 @@ class App extends Component {
     const coordinate1 = (Math.floor(Math.random() * 49) + 1) * 2
     const coordinate2 = (Math.floor(Math.random() * 49) + 1) * 2
     this.setState({ foodDot: [ coordinate1, coordinate2 ] })
+  }
+
+  checkIfOutOfBounds = head => {
+    if (
+      head[0] < 0 || head[0] >= 100 ||
+      head[1] < 0 || head[1] >= 100
+    ) {
+      this.gameOver()
+    }
+  }
+
+  checkIfHitItself = head => {
+    const headString = head.toString()
+    let dotsToCheck = this.state.snakeDots
+    for (let i = 0; i < dotsToCheck.length-1; i++) {
+      if (headString === dotsToCheck[i].toString()) {
+        this.gameOver()
+      }
+    }
+  }
+
+  gameOver = () => {
+    alert('Game Over')
   }
 
   render() {
