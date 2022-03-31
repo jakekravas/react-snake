@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import Snake from './components/Snake'
 import Food from './components/Food'
 
+const initialState = {
+  direction: 'RIGHT',
+  snakeDots: [
+    [0,0],
+  ],
+  speed: 100,
+  foodDot: [40,0]
+}
+
 class App extends Component {
 
-  state = {
-    direction: 'RIGHT',
-    snakeDots: [
-      [0,0],
-      [2,0]
-    ],
-    speed: 100,
-    // foodDot: [0,48]
-    foodDot: [40,0]
-  };
+  state = initialState;
 
   componentDidMount() {
     setInterval(this.moveSnake, this.state.speed);
@@ -85,22 +85,21 @@ class App extends Component {
       snakeDots: snakeDots
     });
 
-    this.checkIfAte(newHead)
-    this.checkIfOutOfBounds(newHead)
-    this.checkIfHitItself(newHead)
+    this.checkIfAte(newHead);
+    this.checkIfOutOfBounds(newHead);
+    this.checkIfHitItself(newHead);
   }
 
   checkIfAte = head => {
     if (head[0] === this.state.foodDot[0] && head[1] === this.state.foodDot[1]) {
-      this.enlargeSnake()
-      this.moveFood()
+      this.enlargeSnake();
+      this.moveFood();
     }
   }
 
   enlargeSnake = () => {
-    let dots = this.state.snakeDots
-    // dots.unshift([])
-    dots.unshift([], [], [], [], [], [], [])
+    let dots = this.state.snakeDots;
+    dots.unshift([]);
     this.setState({ snakeDots: dots });
   }
 
@@ -130,14 +129,28 @@ class App extends Component {
   }
 
   gameOver = () => {
-    alert('Game Over')
+    alert(`Game Over. Your score is ${this.state.snakeDots.length-1}`)
+    this.setState({
+      direction: 'RIGHT',
+      snakeDots: [
+        [0,0],
+      ],
+      speed: 100,
+      foodDot: [40,0]
+    })
   }
 
   render() {
     return (
-      <div className='game-area'>
-        <Snake snakeDots = {this.state.snakeDots}/>
-        <Food dot={this.state.foodDot}/>
+      <div>
+        <div id='score-area'>
+          <h5>Score: {this.state.snakeDots.length-1}</h5>
+          <h5>High score: </h5>
+        </div>
+        <div className='game-area'>
+          <Snake snakeDots = {this.state.snakeDots}/>
+          <Food dot={this.state.foodDot}/>
+        </div>
       </div>
     )
   }

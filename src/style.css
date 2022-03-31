@@ -1,8 +1,19 @@
+#score-area {
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+#score-area > h5 {
+  margin: 0;
+}
+
 .game-area {
   position: relative;
   width: 600px;
   height: 600px;
-  margin: 50px auto; 
+  margin: 15px auto; 
   border: 1px solid #000;
 }
 
