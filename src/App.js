@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Snake from './components/Snake'
 import Food from './components/Food'
+import Score from './components/Score'
 
 const initialState = {
   direction: 'RIGHT',
@@ -8,7 +9,9 @@ const initialState = {
     [0,0],
   ],
   speed: 100,
-  foodDot: [40,0]
+  foodDot: [40,0],
+  score: 0,
+  highScore: localStorage.getItem('highScore') ? localStorage.getItem('highScore') : 0
 }
 
 class App extends Component {
@@ -85,15 +88,25 @@ class App extends Component {
       snakeDots: snakeDots
     });
 
+    // check if food has been eaten
     this.checkIfAte(newHead);
+
+    // check if snake is out of bounds
     this.checkIfOutOfBounds(newHead);
+
+    // check if snake has collided with itself
     this.checkIfHitItself(newHead);
   }
 
   checkIfAte = head => {
     if (head[0] === this.state.foodDot[0] && head[1] === this.state.foodDot[1]) {
+      
+      // make snake bigger
       this.enlargeSnake();
+      // move food to random location
       this.moveFood();
+
+      this.setState({ score: this.state.score+1 })
     }
   }
 
@@ -104,8 +117,11 @@ class App extends Component {
   }
 
   moveFood = () => {
+    // get random horizontal placement
     const coordinate1 = (Math.floor(Math.random() * 49) + 1) * 2
+    // get random vertical placement
     const coordinate2 = (Math.floor(Math.random() * 49) + 1) * 2
+
     this.setState({ foodDot: [ coordinate1, coordinate2 ] })
   }
 
@@ -129,24 +145,36 @@ class App extends Component {
   }
 
   gameOver = () => {
+
+    // check for high score
+    this.checkHighScore()
+
+    // alert user that the game is over and display their score
     alert(`Game Over. Your score is ${this.state.snakeDots.length-1}`)
+
+    // reset state
     this.setState({
       direction: 'RIGHT',
       snakeDots: [
         [0,0],
       ],
       speed: 100,
-      foodDot: [40,0]
+      foodDot: [40,0],
+      score: 0,
+      highScore: localStorage.getItem('highScore') ? localStorage.getItem('highScore') : 0
     })
+  }
+
+  checkHighScore = () => {
+    if (this.state.score > this.state.highScore) {
+      localStorage.setItem('highScore', this.state.score)
+    }
   }
 
   render() {
     return (
       <div>
-        <div id='score-area'>
-          <h5>Score: {this.state.snakeDots.length-1}</h5>
-          <h5>High score: </h5>
-        </div>
+        <Score score={this.state.score} highScore={this.state.highScore}/>
         <div className='game-area'>
           <Snake snakeDots = {this.state.snakeDots}/>
           <Food dot={this.state.foodDot}/>

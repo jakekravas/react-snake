@@ -1,6 +1,4 @@
-import React from 'react'
-
-const Snake = ({ snakeDots }) => {
+export default ({ snakeDots }) => {
   return (
     <div>
       {snakeDots.map((dot, i) => {
@@ -13,5 +11,3 @@ const Snake = ({ snakeDots }) => {
     </div>
   )
 }
-
-export default Snake
